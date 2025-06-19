@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Vibes Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Colors */
+        .tm-color-primary {
+            color: #2d99cc;
+        }
+        
+        /* Header */
+        .tm-site-header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: white;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .tm-site-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tm-tagline {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* Video Banner */
+        #tm-video-container {
+            position: relative;
+            height: 50vh;
+            max-height: 500px;
+            overflow: hidden;
+        }
+        
+        #tm-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #tm-video-control-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Navigation */
+        .tm-main-nav {
+            text-align: center;
+            padding: 15px 0;
+            background: white;
+            position: relative;
+            z-index: 10;
+        }
+        
+        #inline-popups {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tm-nav-item {
+            margin: 0 5px;
+        }
+        
+        .tm-nav-link {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .tm-nav-link:hover {
+            color: #2d99cc;
+        }
+        
+        .tm-nav-link i {
+            display: block;
+            margin: 5px auto 0;
+            color: #2d99cc;
+            font-size: 1.8rem;
+        }
+        
+        /* Popup Styles */
+        .popup {
+            background: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            display: none;
+            border-radius: 8px;
+        }
+        
+        .tm-close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+        
+        .tm-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .tm-col {
+            padding: 0 10px;
+        }
+        
+        .tm-page-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #2d99cc;
+        }
+        
+        /* Introduction Section - Diperbaiki */
+        .intro-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .intro-container {
+                flex-direction: row;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+        
+        .intro-image-container {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .intro-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .intro-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .highlight-box {
+            background: #f0f8ff;
+            padding: 15px;
+            border-left: 4px solid #2d99cc;
+            margin: 20px 0;
+        }
+        
+        /* Gallery Section */
+        .tm-gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tm-gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            height: 180px;
+        }
+        
+        .tm-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .tm-gallery-item figcaption {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: rgba(45, 153, 204, 0.9);
+            color: white;
+            padding: 10px;
+            transition: bottom 0.3s;
+        }
+        
+        .tm-gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .tm-gallery-item:hover figcaption {
+            bottom: 0;
+        }
+        
+        /* Music Section */
+        .music-player {
+            margin-top: 20px;
+        }
+        
+        .song {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .song-cover {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .song-info {
+            width: 100%;
+        }
+        
+        .song-info h3 {
+            margin: 0 0 5px 0;
+            color: #2d99cc;
+        }
+        
+        .song-info p {
+            margin: 0 0 10px 0;
+            color: #666;
+        }
+        
+        audio {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 0;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #2d99cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #247ba0;
+        }
+        
+        /* About Section */
+        .tm-about-col {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .tm-about-col img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        
+        /* Contact Section */
+        .tm-contact-col {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+        }
+        
+        button[type="submit"] {
+            background: #2d99cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background: #247ba0;
+        }
+        
+        .mapouter {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .gmap_canvas iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        .tm-footer {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .tm-site-header h1 {
+                font-size: 3rem;
+            }
+            
+            .tm-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .tm-nav-link {
+                font-size: 1rem;
+                padding: 15px;
+            }
+            
+            .tm-nav-link i {
+                font-size: 2rem;
+            }
+            
+            .popup {
+                padding: 30px;
+                margin: 30px auto;
+            }
+            
+            .tm-col-6 {
+                width: 50%;
+            }
+            
+            .tm-about-col {
+                width: 50%;
+            }
+            
+            .tm-contact-col {
+                width: 50%;
+            }
+            
+            .song {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+            
+            .song-cover {
+                margin-right: 20px;
+                margin-bottom: 0;
+                width: 120px;
+                height: 120px;
+            }
+            
+            .song-info {
+                flex: 1;
+            }
+            
+            audio {
+                max-width: 100%;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            #tm-video-container {
+                height: 60vh;
+            }
+            
+            .tm-gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .tm-gallery-item {
+                height: 220px;
+            }
+            
+            .song-cover {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="tm-site-header">
+        <h1><span class="tm-color-primary">OCEAN</span> VIBES</h1>
+        <em class="tm-tagline">My Personal Portfolio</em>
+    </header>
+
+    <!-- Video banner -->
+    <div id="tm-video-container">
+        <video autoplay muted loop id="tm-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4" type="video/mp4">
+        </video>  
+        <button id="tm-video-control-button" aria-label="Pause video">
+            <i class="fas fa-pause"></i>
+        </button>
+    </div>
+    
+    <div class="tm-container">
+        <nav class="tm-main-nav">
+            <ul id="inline-popups">
+                <li class="tm-nav-item">
+                    <a href="#intro" class="tm-nav-link">
+                        Introduction
+                        <i class="fas fa-water"></i>
+                    </a>                
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#gallery" class="tm-nav-link">
+                        Gallery
+                        <i class="far fa-images"></i>
+                    </a>
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#music" class="tm-nav-link">
+                        My Music
+                        <i class="fas fa-music"></i>
+                    </a>
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#about" class="tm-nav-link">
+                        About
+                        <i class="fas fa-tint"></i>
+                    </a>
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#contact" class="tm-nav-link">
+                        Contact
+                        <i class="far fa-comments"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Introduction Section - Diperbaiki -->
+        <div id="intro" class="popup">
+            <a href="#" class="tm-close-popup" aria-label="Close popup">
+                <i class="fas fa-times"></i>
+            </a>
+            <div class="intro-container">
+                <div class="intro-image-container">
+                    <img src="Oca perkenalan.jpg" alt="Ocean view" class="intro-image">
+                </div>
+                <div class="intro-content">
+                    <h2 class="tm-page-title">Welcome to My Ocean Portfolio</h2>
+                    <p>I'm a marine photographer and music composer passionate about capturing the beauty of ocean life. Through my work, I aim to raise awareness about marine conservation.</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>Featured Project:</strong> Currently working on "Blue Harmony" - a multimedia project combining underwater photography with ocean wave sounds.</p>
+                    </div>
+                    
+                    <p>My approach combines artistic vision with scientific accuracy to create compelling content that bridges art and marine biology.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div id="gallery" class="popup">
+            <a href="#" class="tm-close-popup" aria-label="Close popup">
+                <i class="fas fa-times"></i>
+            </a>
+            <h2 class="tm-page-title">My Gallery</h2>
+            <div class="tm-gallery-container">
+                <figure class="tm-gallery-item">
+                    <img src="oca.jpg" alt="Ocean view 1"/>
+                    <figcaption>
+                        <p>Sunset over the waves</p>							
+                    </figcaption>			
+                </figure>
+                <figure class="tm-gallery-item">
+                    <img src="oca2.jpg" alt="Ocean view 2"/>
+                    <figcaption>
+                        <p>Tropical paradise</p>							
+                    </figcaption>			
+                </figure>
+                <figure class="tm-gallery-item">
+                    <img src="oca3.jpg" alt="Ocean view 3"/>
+                    <figcaption>
+                        <p>Underwater world</p>							
+                    </figcaption>			
+                </figure>
+                <figure class="tm-gallery-item">
+                    <img src="oca4.jpg" alt="Ocean view 4"/>
+                    <figcaption>
+                        <p>Coastal cliffs</p>							
+                    </figcaption>			
+                </figure>
+                <figure class="tm-gallery-item">
+                    <img src="oca5.jpg" alt="Ocean view 5"/>
+                    <figcaption>
+                        <p>Marine life</p>							
+                    </figcaption>			
+                </figure>
+                <figure class="tm-gallery-item">
+                    <img src="oca6.jpg" alt="Ocean view 6"/>
+                    <figcaption>
+                        <p>Seaside tranquility</p>							
+                    </figcaption>			
+                </figure>
+            </div>
+        </div>
+
+        <!-- Music Section -->
+        <div id="music" class="popup">
+            <a href="#" class="tm-close-popup" aria-label="Close popup">
+                <i class="fas fa-times"></i>
+            </a>
+            <h2 class="tm-page-title">My Original Music</h2>
+            
+            <div class="music-player">
+                <!-- Song 1 -->
+                <div class="song">
+                    <img src="Anugrah Terindah.jpeg" alt="Album cover 1" class="song-cover">
+                    <div class="song-info">
+                        <h3>Anugrah terindah</h3>
+                        <p>by Andmesh</p>
+                        <audio controls>
+                            <source src="ANDMESH - ANUGERAH TERINDAH (VIDEO LIRIK) LIRIK LAGU TERBARU.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="ANDMESH - ANUGERAH TERINDAH (VIDEO LIRIK) LIRIK LAGU TERBARU.mp3" download class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Song 2 -->
+                <div class="song">
+                    <img src="Asal kau bahagia.jpeg" alt="Album cover 2" class="song-cover">
+                    <div class="song-info">
+                        <h3>Asal Kau bahagia</h3>
+                        <p>By Armada</p>
+                        <audio controls>
+                            <source src="Armada - Asal Kau Bahagia (Official Lyric Video).mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="Armada - Asal Kau Bahagia (Official Lyric Video).mp3" download class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Song 3 -->
+                <div class="song">
+                    <img src="Secukupnya.jpeg" alt="Album cover 3" class="song-cover">
+                    <div class="song-info">
+                        <h3>Secukupnya</h3>
+                        <p>By hindia
+                        <audio controls>
+                            <source src="Hindia - Secukupnya (Official Lyric & Commentary Video).mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="Hindia - Secukupnya (Official Lyric & Commentary Video).mp3" download class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about" class="popup">
+            <a href="#" class="tm-close-popup" aria-label="Close popup">
+                <i class="fas fa-times"></i>
+            </a>
+            <h2 class="tm-page-title">About Me</h2>
+            <div class="tm-row">
+                <div class="tm-col tm-about-col">
+                    <img src="https://source.unsplash.com/random/600x400/?portrait" alt="My portrait" class="intro-image">
+                    <p>I'm a multimedia artist specializing in ocean-inspired creations. My work combines photography, music, and digital design to capture the essence of marine environments.</p>
+                </div>
+                <div class="tm-col tm-about-col">
+                    <p>With a background in marine biology and digital arts, I bring a unique perspective to my creative projects. I've worked with conservation organizations and creative agencies worldwide.</p>
+                    <p>When I'm not creating, you can find me surfing, diving, or exploring coastal areas for inspiration.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#contact" class="download-btn">
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="popup">
+            <a href="#" class="tm-close-popup" aria-label="Close popup">
+                <i class="fas fa-times"></i>
+            </a>
+            <h2 class="tm-page-title">Contact Me</h2>
+            <div class="tm-row">
+                <div class="tm-col tm-contact-col">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" class="form-control" placeholder="Your Message" required rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tm-col tm-contact-col">
+                    <div class="mapouter">
+                        <div class="gmap_canvas">
+                            <iframe title="My Location" src="https://maps.google.com/maps?q=ocean&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                        </div>
+                    </div>
+                    <address style="margin-top: 20px;">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Coastal Drive, Ocean City</p>
+                        <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope"></i> contact@oceanvibes.com</p>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="tm-footer">
+        <p>&copy; 2023 Ocean Vibes Portfolio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Popup functionality
+        document.querySelectorAll('.tm-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // Hide all popups
+                document.querySelectorAll('.popup').forEach(popup => {
+                    popup.style.display = 'none';
+                });
+                
+                // Show target popup
+                document.querySelector(targetId).style.display = 'block';
+                
+                // Scroll to top of popup
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Close popup functionality
+        document.querySelectorAll('.tm-close-popup').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.closest('.popup').style.display = 'none';
+            });
+        });
+        
+        // Video control
+        const video = document.getElementById('tm-video');
+        const videoControl = document.getElementById('tm-video-control-button');
+        const videoIcon = videoControl.querySelector('i');
+        
+        videoControl.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                videoIcon.classList.remove('fa-play');
+                videoIcon.classList.add('fa-pause');
+            } else {
+                video.pause();
+                videoIcon.classList.remove('fa-pause');
+                videoIcon.classList.add('fa-play');
+            }
+        });
+        
+        // Handle video autoplay on mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            // For mobile devices, we may need to handle autoplay differently
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                video.muted = true;
+                video.play().catch(e => {
+                    // Autoplay was prevented, show play button
+                    videoControl.style.display = 'flex';
+                });
+            }
+        });
+        
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! (This is a demo form)');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
